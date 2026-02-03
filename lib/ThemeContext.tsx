@@ -56,18 +56,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 
   // SSR時のハイドレーションエラーを防ぐため、マウント前はダークテーマで固定
-  if (!mounted) {
-    return (
-      <MuiThemeProvider theme={darkTheme}>
-        <CssBaseline />
-        {children}
-      </MuiThemeProvider>
-    );
-  }
+  const activeTheme = mounted ? theme : darkTheme;
 
   return (
     <ThemeContext.Provider value={value}>
-      <MuiThemeProvider theme={theme}>
+      <MuiThemeProvider theme={activeTheme}>
         <CssBaseline />
         {children}
       </MuiThemeProvider>
