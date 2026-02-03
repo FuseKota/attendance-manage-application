@@ -11,7 +11,6 @@ import {
   Button,
   Alert,
   InputAdornment,
-  alpha,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -63,7 +62,6 @@ export default function SignUpPage() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: `linear-gradient(135deg, ${alpha("#2563eb", 0.05)} 0%, ${alpha("#7c3aed", 0.05)} 100%)`,
           py: 4,
         }}
       >
@@ -73,25 +71,27 @@ export default function SignUpPage() {
             sx={{
               p: 4,
               borderRadius: 4,
-              border: "1px solid",
-              borderColor: "divider",
+              background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              backdropFilter: "blur(10px)",
               textAlign: "center",
             }}
           >
             <Box
               sx={{
-                width: 64,
-                height: 64,
+                width: 72,
+                height: 72,
                 borderRadius: "50%",
-                bgcolor: alpha("#10b981", 0.1),
+                background: "linear-gradient(135deg, rgba(74,222,128,0.2) 0%, rgba(34,197,94,0.2) 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mx: "auto",
                 mb: 3,
+                boxShadow: "0 8px 32px rgba(74,222,128,0.2)",
               }}
             >
-              <CheckCircleIcon sx={{ fontSize: 36, color: "success.main" }} />
+              <CheckCircleIcon sx={{ fontSize: 40, color: "#4ade80" }} />
             </Box>
             <Typography variant="h5" fontWeight={700} gutterBottom>
               登録完了
@@ -122,7 +122,6 @@ export default function SignUpPage() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        background: `linear-gradient(135deg, ${alpha("#2563eb", 0.05)} 0%, ${alpha("#7c3aed", 0.05)} 100%)`,
         py: 4,
       }}
     >
@@ -132,28 +131,30 @@ export default function SignUpPage() {
           sx={{
             p: 4,
             borderRadius: 4,
-            border: "1px solid",
-            borderColor: "divider",
+            background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
+            border: "1px solid rgba(255,255,255,0.1)",
+            backdropFilter: "blur(10px)",
           }}
         >
           {/* ロゴ */}
           <Box sx={{ textAlign: "center", mb: 4 }}>
             <Box
               sx={{
-                width: 64,
-                height: 64,
+                width: 72,
+                height: 72,
                 borderRadius: 3,
-                bgcolor: "primary.main",
+                background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mx: "auto",
                 mb: 2,
+                boxShadow: "0 8px 32px rgba(96,165,250,0.3)",
               }}
             >
-              <AccessTimeIcon sx={{ fontSize: 36, color: "white" }} />
+              <AccessTimeIcon sx={{ fontSize: 40, color: "#0f172a" }} />
             </Box>
-            <Typography variant="h5" fontWeight={700}>
+            <Typography variant="h5" fontWeight={700} sx={{ color: "#f1f5f9" }}>
               勤怠管理
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>

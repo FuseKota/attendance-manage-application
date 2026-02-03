@@ -264,28 +264,32 @@ export default function TodayClient({
       <Paper
         elevation={0}
         sx={{
-          p: 3,
-          mb: 2,
+          p: 4,
+          mb: 3,
           textAlign: "center",
-          background: `linear-gradient(135deg, ${alpha("#2563eb", 0.05)} 0%, ${alpha("#7c3aed", 0.05)} 100%)`,
-          border: "1px solid",
-          borderColor: "divider",
+          background: "linear-gradient(135deg, rgba(96,165,250,0.1) 0%, rgba(167,139,250,0.1) 100%)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          borderRadius: 4,
         }}
       >
         <Typography
           variant="h3"
           component="div"
           sx={{
-            fontSize: { xs: "3rem", sm: "3.5rem" },
+            fontSize: { xs: "3.5rem", sm: "4.5rem" },
             fontWeight: 700,
-            fontFamily: "monospace",
-            color: "primary.main",
-            letterSpacing: 2,
+            fontFamily: '"SF Mono", "Fira Code", monospace',
+            background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            letterSpacing: 4,
+            textShadow: "0 0 40px rgba(96,165,250,0.3)",
           }}
         >
           {format(toZonedTime(currentTime, "Asia/Tokyo"), "HH:mm:ss")}
         </Typography>
-        <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+        <Typography variant="body1" color="text.secondary" sx={{ mt: 1, fontWeight: 500 }}>
           {format(toZonedTime(currentTime, "Asia/Tokyo"), "yyyy年M月d日 (EEEE)", {
             locale: ja,
           })}

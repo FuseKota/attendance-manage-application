@@ -62,24 +62,24 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
             sx={{
               px: 3,
               py: 2,
-              borderBottom: "1px solid",
-              borderColor: "divider",
-              bgcolor: alpha("#2563eb", 0.03),
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Box
                 sx={{
-                  width: 40,
-                  height: 40,
+                  width: 44,
+                  height: 44,
                   borderRadius: 2,
-                  bgcolor: "primary.main",
+                  background: "linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  boxShadow: "0 4px 12px rgba(96,165,250,0.3)",
                 }}
               >
-                <PersonIcon sx={{ color: "white" }} />
+                <PersonIcon sx={{ color: "#0f172a" }} />
               </Box>
               <Box>
                 <Typography variant="subtitle1" fontWeight={600}>
@@ -130,12 +130,13 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                 sx={{
                   mt: 2,
                   p: 2,
-                  bgcolor: alpha("#2563eb", 0.04),
+                  background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
+                  border: "1px solid rgba(255,255,255,0.08)",
                   borderRadius: 2,
                 }}
               >
                 <Box sx={{ display: "flex", gap: 1.5 }}>
-                  <InfoOutlinedIcon fontSize="small" color="primary" sx={{ mt: 0.25 }} />
+                  <InfoOutlinedIcon fontSize="small" sx={{ color: "#60a5fa", mt: 0.25 }} />
                   <Box>
                     <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
                       Slack User IDの取得方法
@@ -175,24 +176,24 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
             sx={{
               px: 3,
               py: 2,
-              borderBottom: "1px solid",
-              borderColor: "divider",
-              bgcolor: alpha("#2563eb", 0.03),
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
+              background: "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Box
                 sx={{
-                  width: 40,
-                  height: 40,
+                  width: 44,
+                  height: 44,
                   borderRadius: 2,
-                  bgcolor: "secondary.main",
+                  background: "linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  boxShadow: "0 4px 12px rgba(167,139,250,0.3)",
                 }}
               >
-                <PublicIcon sx={{ color: "white" }} />
+                <PublicIcon sx={{ color: "#0f172a" }} />
               </Box>
               <Box>
                 <Typography variant="subtitle1" fontWeight={600}>
@@ -211,7 +212,8 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
               elevation={0}
               sx={{
                 p: 2,
-                bgcolor: alpha("#7c3aed", 0.04),
+                background: "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)",
+                border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 2,
                 display: "flex",
                 alignItems: "center",
@@ -232,10 +234,10 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                 sx={{
                   px: 2,
                   py: 0.75,
-                  bgcolor: "white",
+                  bgcolor: "rgba(15,23,42,0.5)",
                   borderRadius: 2,
-                  border: "1px solid",
-                  borderColor: "divider",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  color: "#a78bfa",
                 }}
               >
                 Asia/Tokyo (JST)

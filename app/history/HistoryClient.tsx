@@ -81,9 +81,8 @@ function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid",
-            borderColor: "divider",
-            bgcolor: alpha("#2563eb", 0.03),
+            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
           }}
         >
           <Typography variant="subtitle1" fontWeight={600}>
@@ -154,12 +153,14 @@ function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
                 variant="determinate"
                 value={workProgress}
                 sx={{
-                  height: 6,
-                  borderRadius: 3,
-                  bgcolor: alpha("#2563eb", 0.1),
+                  height: 8,
+                  borderRadius: 4,
+                  bgcolor: "rgba(96,165,250,0.15)",
                   "& .MuiLinearProgress-bar": {
-                    borderRadius: 3,
-                    bgcolor: workMinutes >= 480 ? "success.main" : "primary.main",
+                    borderRadius: 4,
+                    background: workMinutes >= 480
+                      ? "linear-gradient(90deg, #4ade80 0%, #22c55e 100%)"
+                      : "linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%)",
                   },
                 }}
               />
@@ -202,10 +203,10 @@ function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
 // デスクトップ用テーブルコンポーネント
 function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: 3 }}>
+    <TableContainer component={Paper} sx={{ borderRadius: 3, border: "1px solid rgba(255,255,255,0.08)" }}>
       <Table>
         <TableHead>
-          <TableRow sx={{ bgcolor: alpha("#2563eb", 0.03) }}>
+          <TableRow sx={{ background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)" }}>
             <TableCell sx={{ fontWeight: 600 }}>日付</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>出勤</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>退勤</TableCell>
@@ -227,7 +228,7 @@ function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
                 hover
                 sx={{
                   "&:hover": {
-                    bgcolor: alpha("#2563eb", 0.02),
+                    bgcolor: "rgba(96,165,250,0.05)",
                   },
                 }}
               >
@@ -317,11 +318,12 @@ export default function HistoryClient({ sessions }: HistoryClientProps) {
           p: 6,
           textAlign: "center",
           borderRadius: 3,
-          bgcolor: alpha("#2563eb", 0.02),
+          background: "linear-gradient(135deg, rgba(96,165,250,0.05) 0%, rgba(167,139,250,0.05) 100%)",
+          border: "1px solid rgba(255,255,255,0.08)",
         }}
       >
-        <AccessTimeIcon sx={{ fontSize: 48, color: "text.disabled", mb: 2 }} />
-        <Typography color="text.secondary">
+        <AccessTimeIcon sx={{ fontSize: 56, color: "#64748b", mb: 2 }} />
+        <Typography color="text.secondary" fontWeight={500}>
           勤怠履歴がありません
         </Typography>
       </Paper>
