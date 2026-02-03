@@ -16,7 +16,7 @@ export default async function TodayPage() {
   return (
     <>
       <Navigation />
-      <Container maxWidth="sm" sx={{ py: 3 }}>
+      <Container maxWidth="sm" sx={{ py: 2, pb: { xs: 10, sm: 3 } }}>
         {needsSlackSetup && (
           <Alert severity="warning" sx={{ mb: 2 }}>
             Slack User IDが設定されていません。設定画面で設定してください。

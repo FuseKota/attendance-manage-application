@@ -264,7 +264,11 @@ export default function TodayClient({
     <Paper elevation={2} sx={{ p: 3 }}>
       {/* 現在時刻 */}
       <Box sx={{ textAlign: "center", mb: 3 }}>
-        <Typography variant="h3" component="div">
+        <Typography
+          variant="h3"
+          component="div"
+          sx={{ fontSize: { xs: "2.5rem", sm: "3rem" } }}
+        >
           {format(toZonedTime(currentTime, "Asia/Tokyo"), "HH:mm:ss")}
         </Typography>
         <Typography variant="body2" color="text.secondary">

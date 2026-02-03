@@ -11,9 +11,16 @@ import {
   Chip,
   Typography,
   Box,
+  Card,
+  CardContent,
+  Stack,
+  useMediaQuery,
+  useTheme,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ScheduleIcon from "@mui/icons-material/Schedule";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import WorkIcon from "@mui/icons-material/Work";
 import { format, differenceInMinutes } from "date-fns";
 import { toZonedTime } from "date-fns-tz";
 import { ja } from "date-fns/locale";
@@ -55,17 +62,86 @@ function calculateWorkMinutes(session: WorkSessionWithBreaks): number | null {
   return totalMinutes - breakMinutes;
 }
 
-export default function HistoryClient({ sessions }: HistoryClientProps) {
-  if (sessions.length === 0) {
-    return (
-      <Paper sx={{ p: 4, textAlign: "center" }}>
-        <Typography color="text.secondary">
-          勤怠履歴がありません
-        </Typography>
-      </Paper>
-    );
-  }
+// モバイル用カードコンポーネント
+function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
+  const breakMinutes = calculateBreakMinutes(session.breaks);
+  const workMinutes = calculateWorkMinutes(session);
 
+  return (
+    <Card sx={{ mb: 2 }}>
+      <CardContent sx={{ pb: 2, "&:last-child": { pb: 2 } }}>
+        {/* ヘッダー: 日付とステータス */}
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1.5 }}>
+          <Typography variant="subtitle1" fontWeight="bold">
+            {format(
+              toZonedTime(new Date(session.start_at), "Asia/Tokyo"),
+              "M月d日 (E)",
+              { locale: ja }
+            )}
+          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {session.end_at ? (
+              session.slack_posted_at ? (
+                <Chip
+                  icon={<CheckCircleIcon />}
+                  label="送信済"
+                  size="small"
+                  color="success"
+                  variant="outlined"
+                />
+              ) : (
+                <Chip
+                  icon={<ScheduleIcon />}
+                  label="未送信"
+                  size="small"
+                  color="warning"
+                  variant="outlined"
+                />
+              )
+            ) : (
+              <Chip label="勤務中" size="small" color="success" />
+            )}
+          </Box>
+        </Box>
+
+        {/* 時間情報 */}
+        <Stack spacing={1}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <AccessTimeIcon fontSize="small" color="action" />
+            <Typography variant="body2">
+              {formatTime(session.start_at)} - {session.end_at ? formatTime(session.end_at) : "--:--"}
+            </Typography>
+            {breakMinutes > 0 && (
+              <Typography variant="body2" color="text.secondary">
+                (休憩 {formatDuration(breakMinutes)})
+              </Typography>
+            )}
+          </Box>
+
+          {workMinutes !== null && (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <WorkIcon fontSize="small" color="action" />
+              <Typography
+                variant="body2"
+                fontWeight="medium"
+                color={workMinutes >= 480 ? "success.main" : "inherit"}
+              >
+                労働時間: {formatDuration(workMinutes)}
+              </Typography>
+            </Box>
+          )}
+
+          <Typography variant="body2" color="text.secondary" noWrap>
+            {session.dept} / {session.project_channel_name}
+          </Typography>
+        </Stack>
+      </CardContent>
+    </Card>
+  );
+}
+
+// デスクトップ用テーブルコンポーネント
+function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
   return (
     <TableContainer component={Paper}>
       <Table size="small">
@@ -158,4 +234,32 @@ export default function HistoryClient({ sessions }: HistoryClientProps) {
       </Table>
     </TableContainer>
   );
+}
+
+export default function HistoryClient({ sessions }: HistoryClientProps) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+  if (sessions.length === 0) {
+    return (
+      <Paper sx={{ p: 4, textAlign: "center" }}>
+        <Typography color="text.secondary">
+          勤怠履歴がありません
+        </Typography>
+      </Paper>
+    );
+  }
+
+  // モバイルではカード形式、デスクトップではテーブル形式
+  if (isMobile) {
+    return (
+      <Box>
+        {sessions.map((session) => (
+          <SessionCard key={session.id} session={session} />
+        ))}
+      </Box>
+    );
+  }
+
+  return <SessionTable sessions={sessions} />;
 }
