@@ -12,7 +12,7 @@ import {
   Card,
   CardContent,
   InputAdornment,
-  alpha,
+  useTheme,
 } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import PersonIcon from "@mui/icons-material/Person";
@@ -27,6 +27,8 @@ interface SettingsClientProps {
 }
 
 export default function SettingsClient({ initialSettings }: SettingsClientProps) {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [slackUserId, setSlackUserId] = useState(
     initialSettings?.slack_user_id || ""
   );
@@ -62,8 +64,10 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
             sx={{
               px: 3,
               py: 2,
-              borderBottom: "1px solid rgba(255,255,255,0.08)",
-              background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
+              borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+              background: isDark
+                ? "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)"
+                : "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(124,58,237,0.05) 100%)",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -79,7 +83,7 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                   boxShadow: "0 4px 12px rgba(96,165,250,0.3)",
                 }}
               >
-                <PersonIcon sx={{ color: "#0f172a" }} />
+                <PersonIcon sx={{ color: isDark ? "#0f172a" : "#ffffff" }} />
               </Box>
               <Box>
                 <Typography variant="subtitle1" fontWeight={600}>
@@ -130,13 +134,15 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                 sx={{
                   mt: 2,
                   p: 2,
-                  background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: isDark
+                    ? "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)"
+                    : "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(124,58,237,0.05) 100%)",
+                  border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
                   borderRadius: 2,
                 }}
               >
                 <Box sx={{ display: "flex", gap: 1.5 }}>
-                  <InfoOutlinedIcon fontSize="small" sx={{ color: "#60a5fa", mt: 0.25 }} />
+                  <InfoOutlinedIcon fontSize="small" sx={{ color: "primary.main", mt: 0.25 }} />
                   <Box>
                     <Typography variant="body2" fontWeight={500} sx={{ mb: 0.5 }}>
                       Slack User IDの取得方法
@@ -176,8 +182,10 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
             sx={{
               px: 3,
               py: 2,
-              borderBottom: "1px solid rgba(255,255,255,0.08)",
-              background: "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)",
+              borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+              background: isDark
+                ? "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)"
+                : "linear-gradient(135deg, rgba(124,58,237,0.05) 0%, rgba(109,40,217,0.05) 100%)",
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
@@ -193,7 +201,7 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                   boxShadow: "0 4px 12px rgba(167,139,250,0.3)",
                 }}
               >
-                <PublicIcon sx={{ color: "#0f172a" }} />
+                <PublicIcon sx={{ color: isDark ? "#0f172a" : "#ffffff" }} />
               </Box>
               <Box>
                 <Typography variant="subtitle1" fontWeight={600}>
@@ -212,8 +220,10 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
               elevation={0}
               sx={{
                 p: 2,
-                background: "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)",
-                border: "1px solid rgba(255,255,255,0.08)",
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(167,139,250,0.08) 0%, rgba(139,92,246,0.08) 100%)"
+                  : "linear-gradient(135deg, rgba(124,58,237,0.05) 0%, rgba(109,40,217,0.05) 100%)",
+                border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
                 borderRadius: 2,
                 display: "flex",
                 alignItems: "center",
@@ -234,10 +244,10 @@ export default function SettingsClient({ initialSettings }: SettingsClientProps)
                 sx={{
                   px: 2,
                   py: 0.75,
-                  bgcolor: "rgba(15,23,42,0.5)",
+                  bgcolor: isDark ? "rgba(15,23,42,0.5)" : "rgba(0,0,0,0.05)",
                   borderRadius: 2,
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  color: "#a78bfa",
+                  border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
+                  color: "secondary.main",
                 }}
               >
                 Asia/Tokyo (JST)

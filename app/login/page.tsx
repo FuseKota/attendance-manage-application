@@ -11,6 +11,7 @@ import {
   Button,
   Alert,
   InputAdornment,
+  useTheme,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -18,6 +19,8 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { signIn } from "@/app/actions/auth";
 
 export default function LoginPage() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -52,9 +55,12 @@ export default function LoginPage() {
           sx={{
             p: 4,
             borderRadius: 4,
-            background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: isDark
+              ? "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)"
+              : "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
             backdropFilter: "blur(10px)",
+            boxShadow: isDark ? "none" : "0 4px 20px rgba(0,0,0,0.1)",
           }}
         >
           {/* ロゴ */}
@@ -64,18 +70,20 @@ export default function LoginPage() {
                 width: 72,
                 height: 72,
                 borderRadius: 3,
-                background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)",
+                background: isDark
+                  ? "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)"
+                  : "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mx: "auto",
                 mb: 2,
-                boxShadow: "0 8px 32px rgba(96,165,250,0.3)",
+                boxShadow: isDark ? "0 8px 32px rgba(96,165,250,0.3)" : "0 8px 32px rgba(37,99,235,0.3)",
               }}
             >
-              <AccessTimeIcon sx={{ fontSize: 40, color: "#0f172a" }} />
+              <AccessTimeIcon sx={{ fontSize: 40, color: "#ffffff" }} />
             </Box>
-            <Typography variant="h5" fontWeight={700} sx={{ color: "#f1f5f9" }}>
+            <Typography variant="h5" fontWeight={700} color="text.primary">
               勤怠管理
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -142,7 +150,7 @@ export default function LoginPage() {
               <Link
                 href="/signup"
                 style={{
-                  color: "#2563eb",
+                  color: isDark ? "#60a5fa" : "#2563eb",
                   fontWeight: 600,
                   textDecoration: "none",
                 }}

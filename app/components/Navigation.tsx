@@ -27,7 +27,10 @@ import TodayIcon from "@mui/icons-material/Today";
 import HistoryIcon from "@mui/icons-material/History";
 import SettingsIcon from "@mui/icons-material/Settings";
 import LogoutIcon from "@mui/icons-material/Logout";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { signOut } from "@/app/actions/auth";
+import { useThemeMode } from "@/lib/ThemeContext";
 
 const menuItems = [
   { text: "今日", href: "/today", icon: <TodayIcon /> },
@@ -41,6 +44,7 @@ export default function Navigation() {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { mode, toggleTheme } = useThemeMode();
 
   const handleSignOut = async () => {
     await signOut();
@@ -72,6 +76,15 @@ export default function Navigation() {
           >
             勤怠管理
           </Typography>
+          {/* テーマ切り替えボタン */}
+          <IconButton
+            color="inherit"
+            onClick={toggleTheme}
+            aria-label="toggle theme"
+            sx={{ mr: isMobile ? 1 : 0 }}
+          >
+            {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
           {isMobile && (
             <IconButton
               color="inherit"
@@ -115,6 +128,14 @@ export default function Navigation() {
           </List>
           <Divider />
           <List>
+            <ListItem disablePadding>
+              <ListItemButton onClick={toggleTheme}>
+                <ListItemIcon>
+                  {mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+                </ListItemIcon>
+                <ListItemText primary={mode === "dark" ? "ライトモード" : "ダークモード"} />
+              </ListItemButton>
+            </ListItem>
             <ListItem disablePadding>
               <ListItemButton onClick={handleSignOut}>
                 <ListItemIcon>

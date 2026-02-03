@@ -16,7 +16,7 @@ import {
   CircularProgress,
   Card,
   CardContent,
-  alpha,
+  useTheme,
 } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import StopIcon from "@mui/icons-material/Stop";
@@ -74,6 +74,8 @@ export default function TodayClient({
   todayFinishedSession,
   hasSlackUserId,
 }: TodayClientProps) {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [session, setSession] = useState<WorkSessionWithBreaks | null>(
     initialSession
   );
@@ -267,8 +269,10 @@ export default function TodayClient({
           p: 4,
           mb: 3,
           textAlign: "center",
-          background: "linear-gradient(135deg, rgba(96,165,250,0.1) 0%, rgba(167,139,250,0.1) 100%)",
-          border: "1px solid rgba(255,255,255,0.1)",
+          background: isDark
+            ? "linear-gradient(135deg, rgba(96,165,250,0.1) 0%, rgba(167,139,250,0.1) 100%)"
+            : "linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(124,58,237,0.08) 100%)",
+          border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.08)"}`,
           borderRadius: 4,
         }}
       >
@@ -279,12 +283,14 @@ export default function TodayClient({
             fontSize: { xs: "3.5rem", sm: "4.5rem" },
             fontWeight: 700,
             fontFamily: '"SF Mono", "Fira Code", monospace',
-            background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)",
+            background: isDark
+              ? "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)"
+              : "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
             backgroundClip: "text",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             letterSpacing: 4,
-            textShadow: "0 0 40px rgba(96,165,250,0.3)",
+            textShadow: isDark ? "0 0 40px rgba(96,165,250,0.3)" : "none",
           }}
         >
           {format(toZonedTime(currentTime, "Asia/Tokyo"), "HH:mm:ss")}

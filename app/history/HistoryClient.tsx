@@ -15,7 +15,6 @@ import {
   CardContent,
   useMediaQuery,
   useTheme,
-  alpha,
   LinearProgress,
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -65,7 +64,7 @@ function calculateWorkMinutes(session: WorkSessionWithBreaks): number | null {
 }
 
 // モバイル用カードコンポーネント
-function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
+function SessionCard({ session, isDark }: { session: WorkSessionWithBreaks; isDark: boolean }) {
   const breakMinutes = calculateBreakMinutes(session.breaks);
   const workMinutes = calculateWorkMinutes(session);
   const workProgress = workMinutes ? Math.min((workMinutes / 480) * 100, 100) : 0;
@@ -81,8 +80,10 @@ function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
-            background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)",
+            borderBottom: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+            background: isDark
+              ? "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)"
+              : "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(124,58,237,0.05) 100%)",
           }}
         >
           <Typography variant="subtitle1" fontWeight={600}>
@@ -201,12 +202,14 @@ function SessionCard({ session }: { session: WorkSessionWithBreaks }) {
 }
 
 // デスクトップ用テーブルコンポーネント
-function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
+function SessionTable({ sessions, isDark }: { sessions: WorkSessionWithBreaks[]; isDark: boolean }) {
   return (
-    <TableContainer component={Paper} sx={{ borderRadius: 3, border: "1px solid rgba(255,255,255,0.08)" }}>
+    <TableContainer component={Paper} sx={{ borderRadius: 3, border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}` }}>
       <Table>
         <TableHead>
-          <TableRow sx={{ background: "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)" }}>
+          <TableRow sx={{ background: isDark
+            ? "linear-gradient(135deg, rgba(96,165,250,0.08) 0%, rgba(167,139,250,0.08) 100%)"
+            : "linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(124,58,237,0.05) 100%)" }}>
             <TableCell sx={{ fontWeight: 600 }}>日付</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>出勤</TableCell>
             <TableCell sx={{ fontWeight: 600 }}>退勤</TableCell>
@@ -228,7 +231,7 @@ function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
                 hover
                 sx={{
                   "&:hover": {
-                    bgcolor: "rgba(96,165,250,0.05)",
+                    bgcolor: isDark ? "rgba(96,165,250,0.05)" : "rgba(37,99,235,0.03)",
                   },
                 }}
               >
@@ -310,6 +313,7 @@ function SessionTable({ sessions }: { sessions: WorkSessionWithBreaks[] }) {
 export default function HistoryClient({ sessions }: HistoryClientProps) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isDark = theme.palette.mode === "dark";
 
   if (sessions.length === 0) {
     return (
@@ -318,11 +322,13 @@ export default function HistoryClient({ sessions }: HistoryClientProps) {
           p: 6,
           textAlign: "center",
           borderRadius: 3,
-          background: "linear-gradient(135deg, rgba(96,165,250,0.05) 0%, rgba(167,139,250,0.05) 100%)",
-          border: "1px solid rgba(255,255,255,0.08)",
+          background: isDark
+            ? "linear-gradient(135deg, rgba(96,165,250,0.05) 0%, rgba(167,139,250,0.05) 100%)"
+            : "linear-gradient(135deg, rgba(37,99,235,0.03) 0%, rgba(124,58,237,0.03) 100%)",
+          border: `1px solid ${isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
         }}
       >
-        <AccessTimeIcon sx={{ fontSize: 56, color: "#64748b", mb: 2 }} />
+        <AccessTimeIcon sx={{ fontSize: 56, color: "text.secondary", mb: 2 }} />
         <Typography color="text.secondary" fontWeight={500}>
           勤怠履歴がありません
         </Typography>
@@ -334,11 +340,11 @@ export default function HistoryClient({ sessions }: HistoryClientProps) {
     return (
       <Box>
         {sessions.map((session) => (
-          <SessionCard key={session.id} session={session} />
+          <SessionCard key={session.id} session={session} isDark={isDark} />
         ))}
       </Box>
     );
   }
 
-  return <SessionTable sessions={sessions} />;
+  return <SessionTable sessions={sessions} isDark={isDark} />;
 }

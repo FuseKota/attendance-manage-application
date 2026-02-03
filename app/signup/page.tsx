@@ -11,6 +11,7 @@ import {
   Button,
   Alert,
   InputAdornment,
+  useTheme,
 } from "@mui/material";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
@@ -19,6 +20,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { signUp } from "@/app/actions/auth";
 
 export default function SignUpPage() {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -71,9 +74,12 @@ export default function SignUpPage() {
             sx={{
               p: 4,
               borderRadius: 4,
-              background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
-              border: "1px solid rgba(255,255,255,0.1)",
+              background: isDark
+                ? "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)"
+                : "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%)",
+              border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
               backdropFilter: "blur(10px)",
+              boxShadow: isDark ? "none" : "0 4px 20px rgba(0,0,0,0.1)",
               textAlign: "center",
             }}
           >
@@ -82,16 +88,18 @@ export default function SignUpPage() {
                 width: 72,
                 height: 72,
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, rgba(74,222,128,0.2) 0%, rgba(34,197,94,0.2) 100%)",
+                background: isDark
+                  ? "linear-gradient(135deg, rgba(74,222,128,0.2) 0%, rgba(34,197,94,0.2) 100%)"
+                  : "linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(5,150,105,0.15) 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mx: "auto",
                 mb: 3,
-                boxShadow: "0 8px 32px rgba(74,222,128,0.2)",
+                boxShadow: isDark ? "0 8px 32px rgba(74,222,128,0.2)" : "0 8px 32px rgba(16,185,129,0.2)",
               }}
             >
-              <CheckCircleIcon sx={{ fontSize: 40, color: "#4ade80" }} />
+              <CheckCircleIcon sx={{ fontSize: 40, color: "success.main" }} />
             </Box>
             <Typography variant="h5" fontWeight={700} gutterBottom>
               登録完了
@@ -131,9 +139,12 @@ export default function SignUpPage() {
           sx={{
             p: 4,
             borderRadius: 4,
-            background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)",
-            border: "1px solid rgba(255,255,255,0.1)",
+            background: isDark
+              ? "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)"
+              : "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%)",
+            border: `1px solid ${isDark ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)"}`,
             backdropFilter: "blur(10px)",
+            boxShadow: isDark ? "none" : "0 4px 20px rgba(0,0,0,0.1)",
           }}
         >
           {/* ロゴ */}
@@ -143,18 +154,20 @@ export default function SignUpPage() {
                 width: 72,
                 height: 72,
                 borderRadius: 3,
-                background: "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)",
+                background: isDark
+                  ? "linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%)"
+                  : "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 mx: "auto",
                 mb: 2,
-                boxShadow: "0 8px 32px rgba(96,165,250,0.3)",
+                boxShadow: isDark ? "0 8px 32px rgba(96,165,250,0.3)" : "0 8px 32px rgba(37,99,235,0.3)",
               }}
             >
-              <AccessTimeIcon sx={{ fontSize: 40, color: "#0f172a" }} />
+              <AccessTimeIcon sx={{ fontSize: 40, color: "#ffffff" }} />
             </Box>
-            <Typography variant="h5" fontWeight={700} sx={{ color: "#f1f5f9" }}>
+            <Typography variant="h5" fontWeight={700} color="text.primary">
               勤怠管理
             </Typography>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
@@ -239,7 +252,7 @@ export default function SignUpPage() {
               <Link
                 href="/login"
                 style={{
-                  color: "#2563eb",
+                  color: isDark ? "#60a5fa" : "#2563eb",
                   fontWeight: 600,
                   textDecoration: "none",
                 }}
